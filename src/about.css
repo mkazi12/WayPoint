@@ -1,0 +1,47 @@
+.about-page {
+    background-color: #f5f5e0;
+    color: #39603d;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .about-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .about-content {
+    flex: 1;
+    margin-right: 50px; /* Add margin to create space between text and logo */
+  }
+  
+  .about-content h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .about-content h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .about-content p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .about-logo {
+    flex-shrink: 0;
+    font-size: 8em; /* Adjust the size as necessary */
+    font-weight: bold;
+    color: #39603d;
+    margin-left: 50px; /* Ensure logo is not too close to the right edge */
+  }
+  

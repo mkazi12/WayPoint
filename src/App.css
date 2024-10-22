@@ -1,0 +1,118 @@
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #e0ffff;
+  scroll-behavior: smooth;
+}
+
+/* Navigation bar styles within the content container */
+.content-container nav {
+  display: flex;
+  justify-content: space-around; /* Align nav items */
+  align-items: center;
+  padding: 10px 0;
+  background-color: white;
+}
+
+.content-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.content-container li {
+  padding: 0 15px;
+}
+
+.content-container a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.content-container a:hover,
+.content-container a.active {
+  color: #007bff;
+}
+/* Logo styles */
+.logo a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Toggle button for mobile menu */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Profile section styles */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.name {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 64px;
+  color: #333;
+}
+
+.profile-pic img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 5px solid #007bff;
+}
+
+.small-description {
+  font-size: 20px;
+  color: #555;
+}
+
+/* Other section styles */
+#about,
+#experience,
+#projects,
+#contact {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 20px;
+  text-align: center;
+  background-color: #f8f9fa;
+}
+
+/* Responsive design for navigation menu */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 58px;
+    left: 0;
+    background-color: #333;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
