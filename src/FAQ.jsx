@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import Navbar from "./Navbar";
+import Navbar from "./NavBar";
 
 const FAQ = () => {
   const [activeIndex, setActiveIndex] = useState(null);
