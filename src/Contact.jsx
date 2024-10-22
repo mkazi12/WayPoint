@@ -7,19 +7,17 @@ import { Form } from "react-router-dom";
 
 const Contact = () => {
   return (
-    <div>
+    <>
       <Navbar />
       <div style={pageStyle}>
         <h1>Contact Us!</h1>
         <h8>At Waypoint, we’re passionate about helping you craft the perfect journey. Whether you’re planning your next adventure or need help with an existing itinerary, we’re here to assist you every step of the way.
         </h8>
-        <div >
           <CForm />
-        </div>
 
       </div>
 
-    </div>
+    </>
     
   );
 };
