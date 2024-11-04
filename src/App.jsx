@@ -6,8 +6,8 @@ import Navbar from "./NavBar";
 
 const App = () => {
   return (
-    <div>
-      <Navbar />
+    <div style={rootStyle}>
+      <Navbar/>
       <div style={homeStyle}>
         <h1>Home Page</h1>
         <h1>Your perfect trip, expertly planned.</h1>
@@ -18,22 +18,21 @@ const App = () => {
   );
 };
 
+// New root style to reset margins and padding
+const rootStyle = {
+  margin: 0,
+  padding: 0,
+  minHeight: "100vh",
+  width: "100%",
+  backgroundColor: "#DADED4",
+  overflowX: "hidden", // Prevent horizontal scrolling
+};
+
 const homeStyle = {
   padding: "50px",
   textAlign: "center",
-  minHeight: "200vh", // Add some height to enable scrolling
-  backgroundColor: "#DADED4", // Main background color
-  fontSize: "30px", // Increase font size for emphasis
-};
-
-export default App;
-
-const waypointStyle = {
-  color: "#39603D", // Secondary color
-  textDecoration: "none",
-  fontWeight: "bold",
-  fontFamily: "'Libre Bodoni', serif", // Apply Libre Bodoni font
-  fontSize: "24px", // Increase font size for emphasis
+  minHeight: "200vh",
+  fontSize: "30px",
 };
 
 const buttonStyle = {
@@ -45,4 +44,7 @@ const buttonStyle = {
   borderRadius: "15px",
   fontFamily: "Arial, sans-serif",
   transition: "background-color 0.3s ease",
+  display: "inline-block", // Ensure proper button spacing
 };
+
+export default App;

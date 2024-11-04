@@ -1,19 +1,10 @@
-html{
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  padding-top: 80px; /* Offset for the fixed navbar */
-}
-
-h1,
-p {
-  color: #39603d; /* Use the secondary color for text */
-}
-
-h1 {
-  font-family: "Libre Bodoni", serif; /* Apply Libre Bodoni for headings */
+  padding: 0;
 }

@@ -1,11 +1,14 @@
 import React from 'react';
-
+import Navbar from './NavBar';
 const GetStarted = () => {
     return (
+        <>
+        <Navbar/>
         <div style={pageStyle}>
             <h1>Get Started</h1>
             <p>This is the get started page.</p>
         </div>
+        </>
     );
 };
 

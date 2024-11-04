@@ -1,23 +1,50 @@
-import react from 'react';
+import react, { act } from 'react';
 import Navbar from './NavBar';
+import "./SignIn.css";
+import user_icon from "./assets/person.png"
+import email_icon from "./assets/email.png"
+import password_icon from "./assets/password.png"
+import { useState } from 'react';
+
 
 const SignIn = () => {
+
+    const [action, setAction]=useState("Sign Up");
+
+    
     return(
-        <div>
-            <Navbar />
-            <div style={pageStyle}>
-                <h1>Sign In</h1>
-                <p>Sign in to access your account.</p>
+        <>
+        <Navbar/>
+        <div className='container'>
+            <div className="header">
+                <div className="text">{action}</div>
+                <div className="underline"></div>
+            </div>
+            <div className="inputs">
+                {action==="Login"?<div></div>:<div className="input">
+                    <img src={user_icon} alt="" />
+                    <input type="text" placeholder='Name'/>
+                </div>}
+
+                <div className="input">
+                    <img src={email_icon} alt="" />
+                    <input type="email" placeholder='Email'/>
+                </div>
+                <div className="input">
+                    <img src={password_icon} alt="" />
+                    <input type="password" placeholder='Password'/>
+                </div>
+            </div>
+            {action==="Sign Up"?<div></div>:<div className="forgot-password">Forgot Password?<span> Click Here!</span></div>}
+            <div className="submit-container">
+                <div className={action==="Login"?"submit gray":"submit"} onClick={()=>{setAction("Sign Up")}}>Sign Up</div>
+                <div className={action==="Sign Up"?"submit gray":"submit"} onClick={()=>{setAction("Login")}}>Login</div>
             </div>
         </div>
+        
+        </>
     );
 };
 
-const pageStyle = {
-    padding: "20px",
-    minHeight: "200vh",
-    backgroundColor: "#DADED4",
-    color: "#39603D",
-};
 
 export default SignIn;

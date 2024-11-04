@@ -63,17 +63,19 @@ const inputStyle = {
 const textareaStyle = {
   display: "block",
   width: "150%",
-  padding: "10px",
+  padding: "50px",
   margin: "10px 0",
   borderRadius: "5px",
   border: "1px solid #ddd",
   fontSize: "16px",
   minHeight: "100px",
+  textAlign: "Left",
+
 };
 
 const buttonStyle = {
   display: "block",
-  width: "160%",
+  width: "150%",
   padding: "10px",
   margin: "10px 0",
   borderRadius: "5px",

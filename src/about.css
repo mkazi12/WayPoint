@@ -1,12 +1,26 @@
+
+
+/* fix for skewed styling*/
+* {
+    margin: 10;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
 .about-page {
-    background-color: #f5f5e0;
+    background-color: #DADED4;
     color: #39603d;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   .about-container {
     display: flex;
     justify-content: space-between;
