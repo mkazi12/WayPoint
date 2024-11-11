@@ -10,6 +10,7 @@ import FAQ from "./FAQ";
 import Services from "./Services";
 import SignIn from "./SignIn";
 import GetStarted from "./GetStarted";
+import Dashboard from "./Dashboard";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -22,6 +23,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/faq" element={<FAQ />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/getstarted" element={<GetStarted />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
+
       </Routes>
     </Router>
   </React.StrictMode>

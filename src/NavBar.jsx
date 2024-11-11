@@ -35,6 +35,11 @@ const Navbar = () => {
             </Link>
           </li>
           <li style={liStyle}>
+            <Link to="/Dashboard" style={linkStyle}>
+              Dashboard
+            </Link>
+          </li>
+          <li style={liStyle}>
             <Link to="/services" style={linkStyle}>
               Services
             </Link>
