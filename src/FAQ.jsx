@@ -34,10 +34,7 @@ const FAQ = () => {
       answer:
         "Kinda. Waypoint can provide information on estimated prices and availability of hotels and flights. You still need to select and book your flights yourself.",
     },
-    {
-      question: "Can Waypoint give me live updates?",
-      answer: "Yes, Waypoint can provide live updates.",
-    },
+
   ];
 
   const toggleAccordion = (index) => {

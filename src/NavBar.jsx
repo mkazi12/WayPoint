@@ -39,11 +39,11 @@ const Navbar = () => {
               Dashboard
             </Link>
           </li>
-          <li style={liStyle}>
+          {/* <li style={liStyle}>
             <Link to="/services" style={linkStyle}>
               Services
             </Link>
-          </li>
+          </li> */}
           <li style={liStyle}>
             <Link to="/contact" style={linkStyle}>
               Contact

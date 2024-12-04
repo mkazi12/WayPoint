@@ -1,118 +1,161 @@
 import React, { useState } from 'react';
+import { format } from 'date-fns';
+import OpenAI from 'openai';
+import { Autocomplete, TextField, Button, CardContent, CardHeader, Card, CircularProgress, Typography } from '@mui/material';
+import MarkdowIt from 'markdown-it';
 
-const Calendar = ({ startDate, endDate, onDateChange }) => {
-  // ... Calendar component remains the same ...
-};
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true 
+});
+
+const md = new MarkdowIt();
+
 
 const Dashboard = () => {
   const [destination, setDestination] = useState('');
-  const [dates, setDates] = useState({ start: null, end: null });
+  const [date, setDate] = useState({
+    from: undefined,
+    to: undefined,
+  });
   const [accommodations, setAccommodations] = useState('');
-  const [loading, setLoading] = useState(false);
   const [travelPlan, setTravelPlan] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const generateTravelPlan = async () => {
-    if (!destination || !dates.start || !dates.end) {
-      alert('Please fill in all required fields');
+    // Validate inputs
+    if (!destination || !date.from || !date.to) {
+      setError('Please fill in all required fields');
       return;
     }
 
-    setLoading(true);
+    setIsLoading(true);
+    setError('');
+
     try {
-      const response = await fetch('/api/generate-travel-plan', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          destination,
-          dateFrom: dates.start,
-          dateTo: dates.end,
-          accommodations,
-        }),
+      if (!import.meta.env.VITE_OPENAI_API_KEY) {
+        throw new Error("API key not configured");
+      }
+
+      // Prepare prompt
+      const prompt = `Create a detailed travel itinerary for a trip to ${destination} from ${format(date.from, 'PPP')} to ${format(date.to, 'PPP')}.${
+        accommodations ? ` Consider these special requirements: ${accommodations}.` : ''
+      }
+
+      Please include:
+      1. Daily activities and attractions
+      2. Recommended restaurants and local cuisine
+      3. Transportation tips
+      4. Important local customs or considerations
+      5. Weather-appropriate clothing suggestions
+      6. Safety tips if applicable
+
+      Format the response in a clear, day-by-day structure.`;
+
+      const completion = await openai.chat.completions.create({
+        messages: [{ role: "user", content: prompt }],
+        model: "gpt-4o",
+        temperature: 0.7,
+        max_tokens: 1000,
       });
 
-      const data = await response.json();
-      setTravelPlan(data.travelPlan);
-    } catch (error) {
-      console.error('Error generating travel plan:', error);
-      alert('Failed to generate travel plan. Please try again.');
+      // Set the generated travel plan
+      setTravelPlan(completion.choices[0].message.content || 'No plan generated');
+    } catch (err) {
+      console.error('Error generating travel plan:', err);
+      setError(err.message || 'Failed to generate travel plan. Please try again.');
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
+
   };
 
   return (
-    <div style={{ backgroundColor: '#DADED4' }} className="min-h-screen p-8">
-      <div className="max-w-4xl mx-auto space-y-6">
-        <div className="bg-[#F0F4F1] rounded-lg border-2 border-[#A3B18A] shadow-lg">
-          <div className="bg-[#DADED4] p-4 rounded-t-lg">
-            <h1 className="text-2xl font-bold text-[#3C493F]">Travel Planner</h1>
-          </div>
-          
-          <div className="p-6 space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-[#3C493F]">Destination</label>
-              <input
-                type="text"
-                placeholder="Where are you going?"
-                value={destination}
-                onChange={(e) => setDestination(e.target.value)}
-                className="w-full p-2 rounded-lg border-2 border-[#A3B18A] focus:border-[#588157] focus:ring-2 focus:ring-[#588157] bg-[#DADED4] bg-opacity-50 outline-none"
-              />
-            </div>
+    <div className="container mx-auto p-6">
+      <Typography variant="h4" component="h1" gutterBottom>
+        Travel Planner
+      </Typography>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-[#3C493F]">Travel Dates</label>
-              <Calendar
-                startDate={dates.start}
-                endDate={dates.end}
-                onDateChange={setDates}
-              />
-            </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader title="Plan Your Trip" />
+          <CardContent className="space-y-4">
+            <Autocomplete
+              value={destination || ''}
+              onChange={(event, newValue) => setDestination(newValue) || ''}
+              inputValue={destination || ''}
+              onInputChange={(event, newInputValue) => setDestination(newInputValue || '')}
+              options={[]} // You can populate this with a list of destinations
+              renderInput={(params) => (
+                <TextField {...params} label="Destination" variant="outlined" />
+              )}
+            />
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-[#3C493F]">Accommodations & Preferences</label>
-              <textarea
-                placeholder="Any specific accommodation requirements or preferences?"
-                value={accommodations}
-                onChange={(e) => setAccommodations(e.target.value)}
-                className="w-full p-2 min-h-[100px] rounded-lg border-2 border-[#A3B18A] focus:border-[#588157] focus:ring-2 focus:ring-[#588157] bg-[#DADED4] bg-opacity-50 outline-none"
-              />
-            </div>
+            <TextField
+              label="Start Date"
+              type="date"
+              value={date.from ? format(date.from, 'yyyy-MM-dd') : ''}
+              onChange={(e) => setDate({ ...date, from: new Date(e.target.value) })}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              fullWidth
+            />
 
-            <div className="p-4 border-2 border-[#A3B18A] rounded-lg">
-              <button
-                onClick={generateTravelPlan}
-                disabled={loading}
-                className="w-full py-2 px-4 bg-[#588157] hover:bg-[#3A5A40] text-white rounded-lg transition-colors duration-200 disabled:opacity-50"
-              >
-                {loading ? (
-                  <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Generating Plan...
-                  </span>
-                ) : (
-                  'Generate Travel Plan'
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
+            <TextField
+              label="End Date"
+              type="date"
+              value={date.to ? format(date.to, 'yyyy-MM-dd') : ''}
+              onChange={(e) => setDate({ ...date, to: new Date(e.target.value) })}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              fullWidth
+            />
 
-        {travelPlan && (
-          <div className="bg-[#F0F4F1] rounded-lg border-2 border-[#A3B18A] shadow-lg">
-            <div className="bg-[#DADED4] p-4 rounded-t-lg">
-              <h2 className="text-xl font-bold text-[#3C493F]">Your Travel Plan</h2>
-            </div>
-            <div className="p-6">
-              <div className="whitespace-pre-wrap text-[#3C493F]">{travelPlan}</div>
-            </div>
-          </div>
-        )}
+            <TextField
+              label="Special Accommodations"
+              multiline
+              rows={2}
+              value={accommodations}
+              onChange={(e) => setAccommodations(e.target.value)}
+              fullWidth
+            />
+
+            {error && (
+              <Typography color="error" variant="body2">
+                {error}
+              </Typography>
+            )}
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={generateTravelPlan}
+              disabled={isLoading}
+              fullWidth
+            >
+              {isLoading ? <CircularProgress size={24} /> : 'Generate Travel Plan'}
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader title="Your Travel Plan" />
+          <CardContent>
+            {travelPlan ? (
+              <div className="prose max-w-none">
+                <div dangerouslySetInnerHTML={{ __html: md.render(travelPlan) }} />
+              </div>
+            ) : (
+              <Typography color="textSecondary">
+                Fill in your travel details and click "Generate Travel Plan" to get your personalized itinerary.
+              </Typography>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

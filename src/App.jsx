@@ -9,7 +9,7 @@ const App = () => {
     <div style={rootStyle}>
       <Navbar/>
       <div style={homeStyle}>
-        <h1>Home Page</h1>
+        <h1>Waypoint</h1>
         <h1>Your perfect trip, expertly planned.</h1>
         <p>Your all in one travel companion</p>
         <Link to="/getstarted" style={buttonStyle}>Get Started</Link>

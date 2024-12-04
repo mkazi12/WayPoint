@@ -1,31 +1,12 @@
 import React, { useState } from 'react';
-import { initializeApp } from "firebase/app";
-import { 
-    getAuth, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword,
-    updateProfile 
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth } from './Fbase';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './NavBar';
 import "./SignIn.css";
 import user_icon from "./assets/person.png";
 import email_icon from "./assets/email.png";
 import password_icon from "./assets/password.png";
-import { Link } from 'react-router-dom';
-
-// Your Firebase configuration
-const firebaseConfig = {
-    apiKey: "your-api-key",
-    authDomain: "your-auth-domain",
-    projectId: "your-project-id",
-    storageBucket: "your-storage-bucket",
-    messagingSenderId: "your-messaging-sender-id",
-    appId: "your-app-id"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 
 const SignIn = () => {
     const [action, setAction] = useState("Sign Up");
@@ -36,6 +17,7 @@ const SignIn = () => {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         setFormData({
@@ -64,8 +46,8 @@ const SignIn = () => {
                 });
 
                 setSuccess('Account created successfully!');
-                // Redirect or update UI as needed
-                <Link to="/Dashboard"></Link>
+                // Navigate to dashboard after successful signup
+                navigate('/Dashboard');
             } else {
                 // Sign in existing user
                 await signInWithEmailAndPassword(
@@ -75,7 +57,8 @@ const SignIn = () => {
                 );
                 
                 setSuccess('Logged in successfully!');
-                // Redirect or update UI as needed
+                // Navigate to dashboard after successful login
+                navigate('/Dashboard');
             }
         } catch (err) {
             setError(err.message);
