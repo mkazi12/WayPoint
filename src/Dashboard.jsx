@@ -7,7 +7,7 @@ import MarkdowIt from 'markdown-it';
 // Initialize OpenAI client
 const openai = new OpenAI({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true 
+  dangerouslyAllowBrowser: false 
 });
 
 const md = new MarkdowIt();
@@ -87,7 +87,7 @@ const Dashboard = () => {
               onChange={(event, newValue) => setDestination(newValue) || ''}
               inputValue={destination || ''}
               onInputChange={(event, newInputValue) => setDestination(newInputValue || '')}
-              options={[]} // You can populate this with a list of destinations
+              options={[]} 
               renderInput={(params) => (
                 <TextField {...params} label="Destination" variant="outlined" />
               )}
