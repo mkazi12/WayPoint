@@ -60,8 +60,7 @@ const ItinerarySchema = new mongoose.Schema({
   });
   
   export default mongoose.model('Itinerary', ItinerarySchema);
-  
-  // Example save function
+  //save function
   async function saveItinerary(userId, itineraryData) {
     try {
       const newItinerary = new Itinerary({
@@ -80,8 +79,7 @@ const ItinerarySchema = new mongoose.Schema({
       throw error;
     }
   }
-  
-  // Example retrieval function
+  //retrieval function
   async function getUserItineraries(userId) {
     try {
       return await Itinerary.find({ userId }).sort({ createdAt: -1 });

@@ -11,7 +11,7 @@ function CForm() {
     const formData = new FormData(event.target);
 
     formData.append("access_key", "dfe1803b-b055-4b77-86d7-e3fe0c3ae4f8");
-
+    // contact form api
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       body: formData
@@ -19,6 +19,7 @@ function CForm() {
 
     const data = await response.json();
 
+    // see if form was sent
     if (data.success) {
       setResult("Form Submitted Successfully");
       event.target.reset();

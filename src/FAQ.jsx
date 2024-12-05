@@ -36,7 +36,7 @@ const FAQ = () => {
     },
 
   ];
-
+// dropdown effect
   const toggleAccordion = (index) => {
     if (activeIndex === index) {
       setActiveIndex(null);
